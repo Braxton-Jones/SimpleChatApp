@@ -1,3 +1,4 @@
+@import './variables.module.scss';
 .app_layout{
     display: flex;
     flex-direction: column;
@@ -6,27 +7,28 @@
     overflow: hidden;
     background-color: #2d2d2d;
 
-    header{
+    .app_layout_header,
+    .app_layout_footer
+    {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-inline: 20px;
-      }
+      align-items: center;
+      margin-inline: 5vw;
+      color: #fdfdfd;
+      font-size: 1.8vh;
+      letter-spacing: 0.5px;
+      padding: 1vw;
+    }
 
-    h1 {
-        font-size: 4vw;
-        @media (max-width: 600px) {
-            h1 {
-              font-size: 20px;
-            }
-          }
-          
-          @media (min-width: 1000px) {
-            h1 {
-              font-size: 25px;
-            }
-          }
+    .app_layout_footer{
+      .linkTo_me{
+        color: #c673fd;
       }
-      
+      .linkTo_me:hover{
+        color: #fdfdfd;
+      }
+ 
+    }
+
       
 }

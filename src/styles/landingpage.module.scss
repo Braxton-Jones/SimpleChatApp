@@ -1,0 +1,41 @@
+@import "./variables.module.scss";
+.landingPage{
+    height: 100%;
+    background-color: #525252;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .landingPage_content{
+        background-color:rgba(255, 255, 255, 0.2);
+        min-width: pxToRem(500px);
+        max-width: pxToRem(600px);
+        border-radius: pxToRem(10px);
+        padding: pxToRem(20px);
+        display: flex;
+        flex-direction: column;
+        gap: pxToRem(10px);
+        margin: 0 calc(5vw + 5vh);
+
+        .landingPage_title{
+            font-size: pxToRem(50px);
+            font-weight: 600;
+        }
+
+        .landingPage_description{
+            font-size: pxToRem(20px);
+            font-weight: 400;
+        }
+
+        .landingPage_btn_wrapper{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: pxToRem(20px);
+            padding: pxToRem(10px);
+        }
+    }
+
+}
