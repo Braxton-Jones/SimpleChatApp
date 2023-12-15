@@ -1,0 +1,17 @@
+{
+  "name": "simplychatapp",
+  "version": "1.0.0",
+  "description": "Node.js WebSocket server, powered by Socket.IO, enables real-time bidirectional communication between clients and servers.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.2",
+    "socket.io": "^4.7.2"
+  }
+}

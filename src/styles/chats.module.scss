@@ -1,0 +1,67 @@
+.chats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .chats_content {
+    display: flex;
+    width: calc(100vw - 100px);
+    height: calc(90vh - 100px);
+    gap: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chats_chat_window {
+    flex: 2;
+    background-color: #ffffff;
+    border-radius: 8px 0 0 8px;
+  }
+  
+  .chats_chats_select {
+    flex: 1;
+    background-color: #f8f8f8;
+    border-radius: 0 8px 8px 0;
+  }
+  
+// Newly added SCSS
+.chats_chat_window_inputs {
+  display: flex;
+  align-items: center;
+}
+
+.chats_chat_window_messages_input_send {
+  display: flex;
+}
+
+.chats_chat_window_messages_message {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.chat_inputBtn {
+  margin-right: 10px;
+  // Existing code...
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #b384ff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .chat_inputBtn:hover {
+    background-color: #9400d9;
+  }
+
+  .chat_inputBtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

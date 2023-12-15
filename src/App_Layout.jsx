@@ -10,7 +10,7 @@ const AppLayout = () => {
     <AuthNavigateProvider>
       <main className={styles.app_layout}>
         <header className={styles.app_layout_header}>
-          <h1>SimpleChatApp</h1>
+          <h1>SimplyChatApp</h1>
           <AuthButton
             type="logout"
             style={{

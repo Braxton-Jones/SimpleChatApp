@@ -1,0 +1,41 @@
+@import './variables.module.scss';
+.chatroom {
+    border: 2px solid black;
+
+    .chatroom_content {
+        display: flex;
+        flex-direction: row; // Default flex direction is row
+
+        .chatroom_ID {
+            font-size: calc(20px + 1.5vw);
+            font-weight: 700;
+            min-width: pxToRem(80px);
+            text-align: center;
+            border: 1px solid #1d1d1d;
+        }
+
+        .chatroom_details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding-inline: pxToRem(20px);
+            font-size: calc(10px + .5vw);
+            min-width: pxToRem(200px);
+
+            .chatroom_connectedUsers {
+                background-color: hsla(0, 0%, 0%, 0.5);
+                padding: pxToRem(5px) pxToRem(10px);
+            }
+
+            
+        }
+        @media (max-width: 1250px) {
+            .chatroom_details {
+                flex-direction: column; // Switch flex direction to column at 400px screen width
+            }
+        }
+    }
+
+    
+}
