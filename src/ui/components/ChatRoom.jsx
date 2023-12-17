@@ -6,10 +6,17 @@ export default function ChatRoom(props) {
 
   const handleJoinRoom = () => {
     props.setRoom(chatRoomID);
-  }
+  };
 
   return (
-    <section className={chatRoomID === room ? `${styles.chatroom} ${styles.active}` : styles.chatroom} onClick={handleJoinRoom}>
+    <section
+      className={
+        chatRoomID === room
+          ? `${styles.chatroom} ${styles.active}`
+          : styles.chatroom
+      }
+      onClick={handleJoinRoom}
+    >
       <div className={styles.chatroom_content}>
         <div className={styles.chatroom_ID}>
           <p>{chatRoomID || "E"}</p>

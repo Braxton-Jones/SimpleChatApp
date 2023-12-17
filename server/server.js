@@ -23,15 +23,12 @@ io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     socket.join(data);
     console.log("User joined room: " + data);
-    // Send message to room that user joined
-    // Add user to room number
   });
 
   socket.on("send_message", (data) => {
-    console.log(socket.rooms);
-    console.log(`${data.message} was sent to room ${data.room}`);
-    socket.to(data.room).emit("receive_message", buildMsg(data.name, data.message));
+    io.to(data.room).emit("get_message", data);
   });
+  
 
   socket.on("user-activity", (data) => {
     // Send message to room that user is typing
