@@ -9,33 +9,35 @@ export default function Chats() {
   const [room, setRoom] = useState(null);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [userID, setUserID] = useState({ name: "", picture: "" });
   const [isConnected, setIsConnected] = useState(socket.connected);
 
-  console.log("User:", user);
+  console.log("messages", messages);
 
   useEffect(() => {
-    function onConnect() {
-      setIsConnected(true);
-    }
-
-    function onDisconnect() {
-      setIsConnected(false);
-    }
-
-    socket.on("connect", onConnect);
-    socket.on("disconnect", onDisconnect);
-    console.log("Socket:", socket);
-    socket.on("get_message", (data) => {
+    const handleConnect = () => setIsConnected(true);
+    const handleDisconnect = () => setIsConnected(false);
+    const handleGetMessage = (data) => {
       console.log("Received message:", data);
       setMessages((prevMessages) => [...prevMessages, data]);
-    });
+    };
+  
+    socket.on("connect", handleConnect);
+    socket.on("disconnect", handleDisconnect);
+    socket.on("get_message", handleGetMessage);
+    setUserID({ name: user.name, picture: user.picture });
+  
+    
 
+  
     return () => {
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-      socket.off("get_message");
+      socket.off("connect", handleConnect);
+      socket.off("disconnect", handleDisconnect);
+      socket.off("get_message", handleGetMessage);
     };
   }, []);
+  
+  
 
   const handleJoinRoom = (roomID) => {
     console.log("Function", roomID);
@@ -72,7 +74,6 @@ export default function Chats() {
       <div className={styles.chats_content}>
         <section className={styles.chats_chat_window}>
           <div className={styles.chats_chat_window_inputs}>
-            <input type="color" />
             <img
               src={user.picture || profile}
               alt="profile"
@@ -91,12 +92,22 @@ export default function Chats() {
                 </div>
               ) : (
                 <div className={styles.room}>
-                 {messages.map((message, index) => (
-  <div key={index} className={styles.message}>
-    <p>{message.name}: {message.message}</p>
-    <p>Room: {message.room}</p>
-  </div>
-))}
+                  {messages
+                    .filter((message) => message.room === room) // Filter messages by room
+                    .map((message, index) => (
+                      <div
+                        key={index}
+                        className={`${styles.message} ${message.name === userID.name ? styles.outgoing_message : styles.incoming_message}`}
+                      >
+                        <div className={styles.message_content}>
+                        <h4>{message.name !== "Admin" ? `Name: ${message.name} / ID: ${message.id}` : `Message from Room ${message.room}`}</h4>
+                        <p>{message.name === "Admin" ? `Message: ${message.message}` : `Message: ${message.message}`}</p>
+                        </div>
+                        <p>Sent at {message.time}</p>
+                        
+
+                      </div>
+                    ))}
                 </div>
               )}
             </div>
@@ -108,9 +119,7 @@ export default function Chats() {
                 value={message}
               />
               <div className={styles.chats_chat_window_messages_input_send}>
-                <button className={styles.chat_inputBtn} disabled={true}>
-                  {`${isConnected}`}
-                </button>
+              
                 <button
                   className={styles.chat_inputBtn}
                   disabled={!room}

@@ -23,9 +23,6 @@ export default function ChatRoom(props) {
         </div>
         <div className={styles.chatroom_details}>
           <p>Chat Room: {chatRoomID || "E"}</p>
-          <div className={styles.chatroom_connectedUsers}>
-            <p>{(connectedUsers && connectedUsers.length) || 0} Users Online</p>
-          </div>
         </div>
       </div>
     </section>

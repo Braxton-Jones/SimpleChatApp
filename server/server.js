@@ -9,6 +9,9 @@ app.use(cors());
 const server = http.createServer(app);
 
 // Implement in-memory storage!
+let socketIds = []; // Create an empty array to store socket ids
+
+
 
 const io = new Server(server, {
   cors: {
@@ -17,19 +20,53 @@ const io = new Server(server, {
   },
 });
 
+// io.on("connection", (socket) => {
+//   console.log("A user connected");
+
+//   socket.on("join_room", (data) => {
+//     socket.join(data);
+//     console.log("User joined room: " + data);
+//     io.to(data).emit("get_message", buildMsg('Admin', ` has joined the room`, data));
+//   });
+
+//   socket.on("send_message", (data) => {
+//     console.log(data);
+//     io.to(data.room).emit("get_message", buildMsg(data.name, data.message, data.room));
+//   });
+  
+
+//   socket.on("user-activity", (data) => {
+//     // Send message to room that user is typing
+//   });
+
+//   socket.on("leave_room", (data) => {
+//     socket.leave(data);
+//     console.log("User left room: " + data);
+//     io.to(data).emit("get_message", buildMsg('Admin', ` has left the room`, data));
+//   });
+
+//   socket.on("disconnect", () => {
+//     console.log("A user disconnected");
+//   });
+
+// });
 io.on("connection", (socket) => {
   console.log("A user connected");
+
+  // Push the socket id into the socketIds array
+  socketIds.push(socket.id);
 
   socket.on("join_room", (data) => {
     socket.join(data);
     console.log("User joined room: " + data);
+    io.to(data).emit("get_message", buildMsg('Admin', `ID: ${socket.id.substring(0,5)} has joined the room`, data));
   });
 
   socket.on("send_message", (data) => {
-    io.to(data.room).emit("get_message", data);
+    console.log(data);
+    io.to(data.room).emit("get_message", buildMsg(data.name, data.message, data.room, socket.id.substring(0,5)));
   });
   
-
   socket.on("user-activity", (data) => {
     // Send message to room that user is typing
   });
@@ -37,27 +74,28 @@ io.on("connection", (socket) => {
   socket.on("leave_room", (data) => {
     socket.leave(data);
     console.log("User left room: " + data);
-    // Send message to room that user left
-    // Remove user from room number
+    io.to(data).emit("get_message", buildMsg('Admin', `ID: ${socket.id.substring(0,5)} has left the room`, data));
   });
 
   socket.on("disconnect", () => {
     console.log("A user disconnected");
-    // Send message to room that user left
-    // Remove user from room number
+
+    // Remove the socket id from the socketIds array
+    socketIds = socketIds.filter(id => id !== socket.id);
   });
 
 });
-
-function buildMsg(name, text) {
+function buildMsg(name, message, room, id) {
   return {
       name,
-      text,
+      message,
       time: new Intl.DateTimeFormat('default', {
           hour: 'numeric',
           minute: 'numeric',
           second: 'numeric'
-      }).format(new Date())
+      }).format(new Date()),
+      room,
+      id
   }
 }
 
